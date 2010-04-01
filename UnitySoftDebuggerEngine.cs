@@ -53,7 +53,7 @@ namespace MonoDevelop.Debugger.Soft.Unity
 		};
 
 		public bool CanDebugCommand (ExecutionCommand command)
-		{			return true;
+		{			return (command is UnityExecutionCommand);
 //			if (PropertyService.IsMac || PropertyService.IsWindows)
 //				return false;
 //			

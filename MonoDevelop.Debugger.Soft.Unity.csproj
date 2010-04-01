@@ -50,21 +50,9 @@
     </Reference>
     <Reference Include="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
     </Reference>
-    <Reference Include="MonoDevelop.Projects.Gui, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\mono-repo\monodevelop\main\build\bin\MonoDevelop.Projects.Gui.dll</HintPath>
-    </Reference>
-    <Reference Include="MonoDevelop.Components, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\mono-repo\monodevelop\main\build\bin\MonoDevelop.Components.dll</HintPath>
-    </Reference>
     <Reference Include="Mono.TextEditor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\mono-repo\monodevelop\main\build\bin\Mono.TextEditor.dll</HintPath>
-    </Reference>
-    <Reference Include="MonoDevelop.Core.Gui, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\mono-repo\monodevelop\main\build\bin\MonoDevelop.Core.Gui.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Debugger.Soft, Version=0.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756">
       <SpecificVersion>False</SpecificVersion>
