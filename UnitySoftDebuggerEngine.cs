@@ -54,19 +54,13 @@ namespace MonoDevelop.Debugger.Soft.Unity
 
 		public bool CanDebugCommand (ExecutionCommand command)
 		{			return (command is UnityExecutionCommand);
-//			if (PropertyService.IsMac || PropertyService.IsWindows)
-//				return false;
-//			
-//			var cmd = command as MoonlightExecutionCommand;
-//			return cmd != null && cmd.Url.StartsWith ("file://");
 		}
 		
 		public DebuggerStartInfo CreateDebuggerStartInfo (ExecutionCommand command)
 		{
-			var cmd = command as DotNetExecutionCommand;
+			var cmd = command as UnityExecutionCommand;
 			if (null == cmd){ return null; }
 			var msi = new UnityDebuggerStartInfo ("Unity");
-			foreach (string name in cmd.UserAssemblyPaths){ Console.WriteLine (name); }
 			msi.SetUserAssemblies (null);
 			return msi;
 		}
