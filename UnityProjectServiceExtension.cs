@@ -7,8 +7,14 @@ using MonoDevelop.Core.Execution;
 
 namespace MonoDevelop.Debugger.Soft.Unity
 {
+	/// <summary>
+	/// ProjectServiceExtension to allow Unity projects to be executed under the soft debugger
+	/// </summary>
 	public class UnityProjectServiceExtension: ProjectServiceExtension
 	{
+		/// <summary>
+		/// Detects whether any of the given projects reference UnityEngine
+		/// </summary>
 		private static bool ReferencesUnity (IEnumerable<Project> projects)
 		{
 			return null != projects.FirstOrDefault (project => 
@@ -18,6 +24,8 @@ namespace MonoDevelop.Debugger.Soft.Unity
 				)
 			);
 		}
+		
+		#region ProjectServiceExtension overrides
 		
 		protected override bool CanExecute (WorkspaceItem item, ExecutionContext context, ConfigurationSelector configuration)
 		{
@@ -78,16 +86,12 @@ namespace MonoDevelop.Debugger.Soft.Unity
 			base.Execute(monitor, solution, context, configuration);
 		}
 		
-		
-		
-		
-		
-		
-		
-		
-		
+		#endregion
 	}
 	
+	/// <summary>
+	/// Unity execution command
+	/// </summary>
 	public class UnityExecutionCommand: ExecutionCommand
 	{
 		public UnityExecutionCommand ()
