@@ -1,8 +1,10 @@
 // 
-// MoonlightSoftDebuggerEngine.cs
+// UnitySoftDebuggerEngine.cs
+//   based on MoonlightSoftDebuggerEngine.cs
 //  
 // Author:
 //       Michael Hutchinson <mhutchinson@novell.com>
+//       Lucas Meijer <lucas@unity3d.com>
 // 
 // Copyright (c) 2009 Novell, Inc. (http://www.novell.com)
 // 

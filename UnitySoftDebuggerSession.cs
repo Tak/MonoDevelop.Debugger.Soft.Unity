@@ -1,8 +1,10 @@
 // 
-// IPhoneDebuggerSession.cs
+// UnityDebuggerSession.cs
+//   based on IPhoneDebuggerSession.cs
 //  
 // Author:
 //       Michael Hutchinson <mhutchinson@novell.com>
+//       Lucas Meijer <lucas@unity3d.com>
 // 
 // Copyright (c) 2009 Novell, Inc. (http://www.novell.com)
 // 
