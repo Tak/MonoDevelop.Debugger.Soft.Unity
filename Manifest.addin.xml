@@ -9,6 +9,7 @@
 
 	<Dependencies>
 		<Addin id="MonoDevelop.Core" version="2.4"/>
+		<Addin id="MonoDevelop.Ide" version="2.4"/>
 		<Addin id="MonoDevelop.Debugger" version="2.4"/>
 		<Addin id="MonoDevelop.Debugger.Soft" version="2.4"/>
 	</Dependencies>
@@ -23,5 +24,14 @@
 	
 	<Extension path = "/MonoDevelop/ProjectModel/ProjectServiceExtensions">
 		<Class class = "MonoDevelop.Debugger.Soft.Unity.UnityProjectServiceExtension" id="UnityProjectServiceExtension" insertafter="FinalStep"/>
+	</Extension>
+
+	<Extension path = "/MonoDevelop/Ide/GlobalOptionsDialog">
+		<Section id = "Unity" _label = "Unity">
+			<Section
+				id = "UnitySoftDebuggerOptions"
+				_label = "Debugger"
+				class = "MonoDevelop.Debugger.Soft.Unity.GeneralOptionsPanelBinding"/>
+			</Section>
 	</Extension>
 </Addin>
