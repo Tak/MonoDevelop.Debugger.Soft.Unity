@@ -5,11 +5,11 @@
     <target-gtk-version>2.12</target-gtk-version>
   </configuration>
   <import>
-    <widget-library name="../../../work/svn-repos/monodevelop/main/build/bin/Mono.TextEditor.dll" />
-    <widget-library name="../../../work/svn-repos/monodevelop/main/build/bin/MonoDevelop.Ide.dll" />
-    <widget-library name="../../../work/svn-repos/monodevelop/main/build/AddIns/MonoDevelop.Debugger.Soft/MonoDevelop.Debugger.Soft.dll" />
-    <widget-library name="../../../work/svn-repos/monodevelop/main/build/AddIns/MonoDevelop.Debugger.dll" />
-    <widget-library name="../../../work/svn-repos/monodevelop/main/build/AddIns/MonoDevelop.Debugger.Soft.Unity.dll" internal="true" />
+    <widget-library name="../../../mono-repo/monodevelop/main/build/bin/Mono.TextEditor.dll" />
+    <widget-library name="../../../mono-repo/monodevelop/main/build/AddIns/MonoDevelop.Debugger.Soft.dll" />
+    <widget-library name="../../../mono-repo/monodevelop/main/build/AddIns/MonoDevelop.Debugger.dll" />
+    <widget-library name="../../../mono-repo/monodevelop/main/build/bin/MonoDevelop.Ide.dll" />
+    <widget-library name="../../../mono-repo/monodevelop/main/build/AddIns/MonoDevelop.Debugger.Soft.Unity.dll" internal="true" />
   </import>
   <widget class="Gtk.Bin" id="MonoDevelop.Debugger.Soft.Unity.GeneralOptionsPanel" design-size="300 300">
     <property name="MemberName" />
@@ -25,7 +25,7 @@
             <child>
               <widget class="Gtk.Label" id="label1">
                 <property name="MemberName" />
-                <property name="LabelProp" translatable="yes">Unity Location</property>
+                <property name="LabelProp" translatable="yes">Editor Location</property>
               </widget>
               <packing>
                 <property name="Position">0</property>
