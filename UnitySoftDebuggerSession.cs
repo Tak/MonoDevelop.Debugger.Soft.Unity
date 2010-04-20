@@ -5,6 +5,7 @@
 // Author:
 //       Michael Hutchinson <mhutchinson@novell.com>
 //       Lucas Meijer <lucas@unity3d.com>
+//       Levi Bard <levi@unity3d.com>
 // 
 // Copyright (c) 2009 Novell, Inc. (http://www.novell.com)
 // 
@@ -41,12 +42,23 @@ using System.Collections.Generic;
 
 namespace MonoDevelop.Debugger.Soft.Unity
 {
+	/// <summary>
+	/// Debugger session for Unity scripting code
+	/// </summary>
 	public class UnitySoftDebuggerSession : RemoteSoftDebuggerSession
 	{
 		Process unityprocess;
+		string unityPath;
 		
 		public UnitySoftDebuggerSession ()
 		{
+			// TODO: Make this configurable
+			if (PropertyService.IsMac) {
+				unityPath = "/Applications/Unity/Unity.app/Contents/MacOS/Unity";
+			} else if (PropertyService.IsWindows) {
+				unityPath = "";
+			}
+			
 			Adaptor.BusyStateChanged += delegate(object sender, BusyStateEventArgs e) {
 				SetBusyState (e);
 			};
@@ -59,24 +71,21 @@ namespace MonoDevelop.Debugger.Soft.Unity
 			StartListening(dsi);
 		}
 
+		/// <summary>
+		/// Launch Unity
+		/// </summary>
 		void StartUnity (UnityDebuggerStartInfo dsi)
 		{
 			if (unityprocess != null)
 				throw new InvalidOperationException ("Unity already started");
 			
-			                                 
-			//var psi = new ProcessStartInfo ("C:\\unity\\twoseven\\build\\WindowsEditor\\Data\\Mono\\win32\\bin\\Mono.exe")
-			// var psi = new ProcessStartInfo ("c:\\unity\\twoseven2\\build\\windowseditor\\unity.exe")
-			var psi = new ProcessStartInfo ("/Users/levi/Code/unity/unity-2.7/build/MacEditor/Unity.app/Contents/MacOS/Unity")
+			var psi = new ProcessStartInfo (unityPath)
+			// var psi = new ProcessStartInfo ("/Users/levi/Code/unity/unity-2.7/build/MacEditor/Unity.app/Contents/MacOS/Unity")
 			{
-				//Arguments = "--debugger-agent=transport=dt_socket,address=127.0.0.1:57432 \"C:\\Users\\Lucas Meijer\\Documents\\Projects\\test1\\test1\\bin\\Debug\\test1.exe\"",
 				Arguments = string.Empty,
 				UseShellExecute = false,
-				//RedirectStandardOutput = false,
-				//RedirectStandardError = false
+				WorkingDirectory = Path.GetDirectoryName (unityPath)
 			};
-
-			//psi.EnvironmentVariables.Add ("MONO_PATH",");
 
 //			var sdbLog = Environment.GetEnvironmentVariable ("MONODEVELOP_SDB_LOG");
 //			if (!String.IsNullOrEmpty (sdbLog)) {
@@ -84,22 +93,21 @@ namespace MonoDevelop.Debugger.Soft.Unity
 //				options.AgentArgs = string.Format ("loglevel=1,logfile='{0}'", sdbLog);
 //			}
 			
+			// Pass through environment
 			foreach (DictionaryEntry env in Environment.GetEnvironmentVariables ()) {
 				Console.WriteLine ("{0} = \"{1}\"", env.Key, env.Value);
 				psi.EnvironmentVariables[(string)env.Key] = (string)env.Value;
 			}
-			
 			foreach (var env in dsi.EnvironmentVariables) {
 				Console.WriteLine ("{0} = \"{1}\"", env.Key, env.Value);
 				psi.EnvironmentVariables[env.Key] = env.Value;
 			}
 			
-			psi.EnvironmentVariables.Add ("MONO_ARGUMENTS","--debugger-agent=transport=dt_socket,address=127.0.0.1:57432,logfile=/tmp/monodevelop.sdb.log,loglevel=1");
+			// Connect back to soft debugger client
+			psi.EnvironmentVariables.Add ("MONO_ARGUMENTS","--debugger-agent=transport=dt_socket,address=127.0.0.1:57432");
 			psi.EnvironmentVariables.Add ("MONO_LOG_LEVEL","debug");
 			
 			unityprocess = Process.Start (psi);
-			// ConnectOutput(unityprocess.StandardOutput, true);
-			// ConnectOutput(unityprocess.StandardError, true);
 			
 			unityprocess.EnableRaisingEvents = true;
 			unityprocess.Exited += delegate
@@ -110,14 +118,20 @@ namespace MonoDevelop.Debugger.Soft.Unity
 		
 		protected override void EndSession ()
 		{
-			EndUnityProcess ();
-			base.EndSession ();
+			try {
+				EndUnityProcess ();
+				base.EndSession ();
+			} catch (Mono.Debugger.Soft.VMDisconnectedException) {
+			}
 		}
 		
 		protected override void OnExit ()
 		{
-			EndUnityProcess ();
-			base.OnExit ();
+			try {
+				EndUnityProcess ();
+				base.OnExit ();
+			} catch (Mono.Debugger.Soft.VMDisconnectedException) {
+			}
 		}
 		
 		void EndUnityProcess ()
@@ -128,7 +142,7 @@ namespace MonoDevelop.Debugger.Soft.Unity
 				return;
 			}
 
-			unityprocess.Kill();
+			unityprocess.Kill ();
 			unityprocess.WaitForExit (5000);
 			unityprocess = null;
 		}

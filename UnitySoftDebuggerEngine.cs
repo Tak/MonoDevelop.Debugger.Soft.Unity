@@ -52,6 +52,8 @@ namespace MonoDevelop.Debugger.Soft.Unity
 			"/Users/levi/Downloads/ShadowProject/Library/ScriptAssemblies/Assembly - CSharp.dll",
 			"/Users/levi/Downloads/ShadowProject/Library/ScriptAssemblies/Assembly - UnityScript - first pass.dll",
 			"/Users/levi/Downloads/ShadowProject/Library/ScriptAssemblies/Assembly - UnityScript.dll",
+			"/Users/levi/Downloads/ShadowProject/Library/ScriptAssemblies/Assembly - Boo - first pass.dll",
+			"/Users/levi/Downloads/ShadowProject/Library/ScriptAssemblies/Assembly - Boo.dll",
 		};
 
 		public bool CanDebugCommand (ExecutionCommand command)
@@ -64,6 +66,7 @@ namespace MonoDevelop.Debugger.Soft.Unity
 			if (null == cmd){ return null; }
 			var msi = new UnityDebuggerStartInfo ("Unity");
 			msi.SetUserAssemblies (null);
+			
 			return msi;
 		}
 

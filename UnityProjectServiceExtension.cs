@@ -55,6 +55,9 @@ namespace MonoDevelop.Debugger.Soft.Unity
 		
 		#region ProjectServiceExtension overrides
 		
+		/// <summary>
+		/// Flags Unity projects for debugging with this addin
+		/// </summary>
 		public override bool CanExecute (IBuildTarget item, ExecutionContext context, ConfigurationSelector configuration)
 		{
 			if (item is WorkspaceItem) {
@@ -66,6 +69,9 @@ namespace MonoDevelop.Debugger.Soft.Unity
 			return false;
 		}
 		
+		/// <summary>
+		/// Launch Unity project
+		/// </summary>
 		public override void Execute (MonoDevelop.Core.IProgressMonitor monitor, IBuildTarget item, ExecutionContext context, ConfigurationSelector configuration)
 		{
 			context.ExecutionHandler.Execute (new UnityExecutionCommand (), context.ConsoleFactory.CreateConsole (true));
@@ -77,6 +83,9 @@ namespace MonoDevelop.Debugger.Soft.Unity
 	/// <summary>
 	/// Unity execution command
 	/// </summary>
+	/// <remarks>
+	/// This is necessary to fake out the execution handler for an assembly project
+	/// </remarks>
 	public class UnityExecutionCommand: ExecutionCommand
 	{
 		public UnityExecutionCommand ()
