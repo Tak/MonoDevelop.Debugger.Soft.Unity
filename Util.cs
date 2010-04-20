@@ -34,24 +34,39 @@ using MonoDevelop.Core;
 
 namespace MonoDevelop.Debugger.Soft.Unity
 {
+	/// <summary>
+	/// Static utility class
+	/// </summary>
 	public static class Util
 	{
+		// Default Unity editor installer locations
 		static readonly string unityOSX = "/Applications/Unity/Unity.app/Contents/MacOS/Unity"; 
 		static readonly string unityWinX86 = @"C:\Program Files (x86)\Unity\Editor\Unity.exe";
 		static readonly string unityWin = @"C:\Program Files\Unity\Editor\Unity.exe";
+		
+		// Keys for PropertyService
 		public static readonly string UnityLocationProperty = "MonoDevelop.Debugger.Soft.Unity.UnityLocation";
 		public static readonly string UnityLaunchProperty = "MonoDevelop.Debugger.Soft.Unity.LaunchUnity";
 		
+		/// <summary>
+		/// Configured path to Unity editor
+		/// </summary>
 		public static string UnityLocation {
 			get{ return PropertyService.Get (UnityLocationProperty, FindUnity ()); }
 			set{ PropertyService.Set (UnityLocationProperty, value); }
 		}
 		
+		/// <summary>
+		/// Whether to automatically launch Unity
+		/// </summary>
 		public static bool UnityLaunch {
 			get{ return PropertyService.Get (UnityLaunchProperty, true); }
 			set{ PropertyService.Set (UnityLaunchProperty, value); }
 		}
 		
+		/// <summary>
+		/// Get the best-guess default Unity editor path for the current platform
+		/// </summary>
 		public static string FindUnity ()
 		{
 			string unityLocation = string.Empty;

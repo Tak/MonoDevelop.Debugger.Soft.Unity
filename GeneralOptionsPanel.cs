@@ -35,16 +35,24 @@ using MonoDevelop.Ide.Gui.Dialogs;
 
 namespace MonoDevelop.Debugger.Soft.Unity
 {
+	/// <summary>
+	/// Global options panel for Unity debugger
+	/// </summary>
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class GeneralOptionsPanel : Gtk.Bin
 	{
 		public GeneralOptionsPanel ()
 		{
 			this.Build ();
+			
+			// Load defaults
 			unityChooser.SetFilename (Util.UnityLocation);
 			launchCB.Active = Util.UnityLaunch;
 		}
 
+		/// <summary>
+		/// Store selected properties
+		/// </summary>
 		public bool Store ()
 		{
 			Util.UnityLocation = unityChooser.Filename;
@@ -54,6 +62,9 @@ namespace MonoDevelop.Debugger.Soft.Unity
 		}
 	}
 	
+	/// <summary>
+	/// OptionsPanel wrapper for GeneralOptionsPanel
+	/// </summary>
 	public class GeneralOptionsPanelBinding : OptionsPanel
 	{
 		private GeneralOptionsPanel panel;
