@@ -27,6 +27,7 @@
 // 
 
 using System;
+using System.IO;
 using System.Linq;
 using System.Collections.Generic;
 
@@ -63,7 +64,10 @@ namespace MonoDevelop.Debugger.Soft.Unity
 			if (item is WorkspaceItem) {
 				return CanExecute ((WorkspaceItem)item, context, configuration);
 			}
-			if (item is Project && ReferencesUnity (new Project[]{ (Project)item })) {
+			if (item is Project &&
+			    !string.IsNullOrEmpty (Util.UnityLocation) &&
+			    File.Exists (Util.UnityLocation) &&
+			    ReferencesUnity (new Project[]{ (Project)item })) {
 				return context.ExecutionHandler.CanExecute (new UnityExecutionCommand ());
 			}
 			return false;

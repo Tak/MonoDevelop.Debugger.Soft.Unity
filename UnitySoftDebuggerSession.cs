@@ -52,12 +52,7 @@ namespace MonoDevelop.Debugger.Soft.Unity
 		
 		public UnitySoftDebuggerSession ()
 		{
-			// TODO: Make this configurable
-			if (PropertyService.IsMac) {
-				unityPath = "/Applications/Unity/Unity.app/Contents/MacOS/Unity";
-			} else if (PropertyService.IsWindows) {
-				unityPath = "";
-			}
+			unityPath = Util.UnityLocation;
 			
 			Adaptor.BusyStateChanged += delegate(object sender, BusyStateEventArgs e) {
 				SetBusyState (e);
@@ -76,6 +71,9 @@ namespace MonoDevelop.Debugger.Soft.Unity
 		/// </summary>
 		void StartUnity (UnityDebuggerStartInfo dsi)
 		{
+			if (!Util.UnityLaunch)
+				return; // Wait for remote connection
+				
 			if (unityprocess != null)
 				throw new InvalidOperationException ("Unity already started");
 			

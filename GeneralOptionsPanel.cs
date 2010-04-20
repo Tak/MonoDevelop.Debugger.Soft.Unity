@@ -41,14 +41,14 @@ namespace MonoDevelop.Debugger.Soft.Unity
 		public GeneralOptionsPanel ()
 		{
 			this.Build ();
-			unityChooser.SetFilename (PropertyService.Get (Util.UnityLocationProperty, Util.FindUnity ()));
-			launchCB.Active = PropertyService.Get (Util.UnityLaunchProperty, true);
+			unityChooser.SetFilename (Util.UnityLocation);
+			launchCB.Active = Util.UnityLaunch;
 		}
 
 		public bool Store ()
 		{
-			PropertyService.Set (Util.UnityLocationProperty, unityChooser.Filename);
-			PropertyService.Set (Util.UnityLaunchProperty, launchCB.Active);
+			Util.UnityLocation = unityChooser.Filename;
+			Util.UnityLaunch = launchCB.Active;
 			PropertyService.SaveProperties ();
 			return true;
 		}

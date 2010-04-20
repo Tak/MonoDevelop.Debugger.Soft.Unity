@@ -37,6 +37,7 @@
             <child>
               <widget class="Gtk.FileChooserButton" id="unityChooser">
                 <property name="MemberName">unityChooser</property>
+                <property name="Title" translatable="yes">Browse to the Unity editor</property>
               </widget>
               <packing>
                 <property name="Position">1</property>

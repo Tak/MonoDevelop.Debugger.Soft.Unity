@@ -8,8 +8,8 @@
        version   = "2.4">
 
 	<Dependencies>
-		<Addin id="MonoDevelop.Core" version="2.4"/>
 		<Addin id="MonoDevelop.Ide" version="2.4"/>
+		<Addin id="MonoDevelop.Core" version="2.4"/>
 		<Addin id="MonoDevelop.Debugger" version="2.4"/>
 		<Addin id="MonoDevelop.Debugger.Soft" version="2.4"/>
 	</Dependencies>

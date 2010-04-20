@@ -42,6 +42,16 @@ namespace MonoDevelop.Debugger.Soft.Unity
 		public static readonly string UnityLocationProperty = "MonoDevelop.Debugger.Soft.Unity.UnityLocation";
 		public static readonly string UnityLaunchProperty = "MonoDevelop.Debugger.Soft.Unity.LaunchUnity";
 		
+		public static string UnityLocation {
+			get{ return PropertyService.Get (UnityLocationProperty, FindUnity ()); }
+			set{ PropertyService.Set (UnityLocationProperty, value); }
+		}
+		
+		public static bool UnityLaunch {
+			get{ return PropertyService.Get (UnityLaunchProperty, true); }
+			set{ PropertyService.Set (UnityLaunchProperty, value); }
+		}
+		
 		public static string FindUnity ()
 		{
 			string unityLocation = string.Empty;
