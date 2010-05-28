@@ -60,6 +60,11 @@ namespace MonoDevelop.Debugger.Soft.Unity
 			PropertyService.SaveProperties ();
 			return true;
 		}
+		
+		protected virtual void OnLaunchCBToggled (object sender, System.EventArgs e)
+		{
+			unityChooser.Sensitive = launchCB.Active;
+		}
 	}
 	
 	/// <summary>

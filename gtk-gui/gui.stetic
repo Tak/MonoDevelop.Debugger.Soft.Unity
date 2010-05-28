@@ -6,8 +6,8 @@
   </configuration>
   <import>
     <widget-library name="../../../mono-repo/monodevelop/main/build/bin/Mono.TextEditor.dll" />
-    <widget-library name="../../../mono-repo/monodevelop/main/build/AddIns/MonoDevelop.Debugger.Soft.dll" />
-    <widget-library name="../../../mono-repo/monodevelop/main/build/AddIns/MonoDevelop.Debugger.dll" />
+    <widget-library name="MonoDevelop.Debugger.Soft, Version=2.4.0.0, Culture=neutral" />
+    <widget-library name="MonoDevelop.Debugger, Version=2.4.0.0, Culture=neutral" />
     <widget-library name="../../../mono-repo/monodevelop/main/build/bin/MonoDevelop.Ide.dll" />
     <widget-library name="../../../mono-repo/monodevelop/main/build/AddIns/MonoDevelop.Debugger.Soft.Unity.dll" internal="true" />
   </import>
@@ -57,10 +57,10 @@
             <property name="MemberName">launchCB</property>
             <property name="CanFocus">True</property>
             <property name="Label" translatable="yes">_Launch Unity automatically</property>
-            <property name="Active">True</property>
             <property name="DrawIndicator">True</property>
             <property name="HasLabel">True</property>
             <property name="UseUnderline">True</property>
+            <signal name="Toggled" handler="OnLaunchCBToggled" after="yes" />
           </widget>
           <packing>
             <property name="Position">1</property>

@@ -53,7 +53,6 @@ namespace MonoDevelop.Debugger.Soft.Unity
 			this.launchCB.CanFocus = true;
 			this.launchCB.Name = "launchCB";
 			this.launchCB.Label = global::Mono.Unix.Catalog.GetString ("_Launch Unity automatically");
-			this.launchCB.Active = true;
 			this.launchCB.DrawIndicator = true;
 			this.launchCB.UseUnderline = true;
 			this.vbox1.Add (this.launchCB);
@@ -66,6 +65,7 @@ namespace MonoDevelop.Debugger.Soft.Unity
 				this.Child.ShowAll ();
 			}
 			this.Hide ();
+			this.launchCB.Toggled += new global::System.EventHandler (this.OnLaunchCBToggled);
 		}
 	}
 }
