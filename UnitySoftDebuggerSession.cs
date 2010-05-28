@@ -102,7 +102,7 @@ namespace MonoDevelop.Debugger.Soft.Unity
 			}
 			
 			// Connect back to soft debugger client
-			psi.EnvironmentVariables.Add ("MONO_ARGUMENTS","--debugger-agent=transport=dt_socket,address=127.0.0.1:57432");
+			psi.EnvironmentVariables.Add ("MONO_ARGUMENTS","--debugger-agent=transport=dt_socket,address=127.0.0.1:57432,embedding=1");
 			psi.EnvironmentVariables.Add ("MONO_LOG_LEVEL","debug");
 			
 			unityprocess = Process.Start (psi);
