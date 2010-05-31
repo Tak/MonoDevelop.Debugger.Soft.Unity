@@ -79,7 +79,7 @@ namespace MonoDevelop.Debugger.Soft.Unity
 			
 			var psi = new ProcessStartInfo (unityPath)
 			{
-				Arguments = string.Empty,
+				Arguments = dsi.Arguments,
 				UseShellExecute = false,
 				WorkingDirectory = Path.GetDirectoryName (unityPath)
 			};

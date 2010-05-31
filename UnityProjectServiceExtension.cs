@@ -68,7 +68,7 @@ namespace MonoDevelop.Debugger.Soft.Unity
 			    !string.IsNullOrEmpty (Util.UnityLocation) &&
 			    File.Exists (Util.UnityLocation) &&
 			    ReferencesUnity (new Project[]{ (Project)item })) {
-				return context.ExecutionHandler.CanExecute (new UnityExecutionCommand ());
+				return context.ExecutionHandler.CanExecute (new UnityExecutionCommand (item.BaseDirectory.FullPath));
 			}
 			return false;
 		}
@@ -78,7 +78,7 @@ namespace MonoDevelop.Debugger.Soft.Unity
 		/// </summary>
 		public override void Execute (MonoDevelop.Core.IProgressMonitor monitor, IBuildTarget item, ExecutionContext context, ConfigurationSelector configuration)
 		{
-			context.ExecutionHandler.Execute (new UnityExecutionCommand (), context.ConsoleFactory.CreateConsole (true));
+			context.ExecutionHandler.Execute (new UnityExecutionCommand (item.BaseDirectory.FullPath), context.ConsoleFactory.CreateConsole (true));
 		}
 		
 		#endregion
@@ -92,16 +92,19 @@ namespace MonoDevelop.Debugger.Soft.Unity
 	/// </remarks>
 	public class UnityExecutionCommand: ExecutionCommand
 	{
-		public UnityExecutionCommand ()
+		public UnityExecutionCommand (string baseDirectory)
 		{
+			ProjectPath = baseDirectory;
 		}
 		
 		#region implemented abstract members of MonoDevelop.Core.Execution.ExecutionCommand
 		
+		public string ProjectPath {
+			get; private set;
+		}
+		
 		public override string CommandString {
-			get {
-				return string.Empty;
-			}
+			get{ return string.Empty; }
 		}
 		
 		#endregion

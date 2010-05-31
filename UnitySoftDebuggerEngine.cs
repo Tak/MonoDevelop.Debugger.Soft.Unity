@@ -60,7 +60,7 @@ namespace MonoDevelop.Debugger.Soft.Unity
 			if (null == cmd){ return null; }
 			var msi = new UnityDebuggerStartInfo ("Unity");
 			msi.SetUserAssemblies (null);
-			
+			msi.Arguments = string.Format ("-projectPath \"{0}\"", cmd.ProjectPath);
 			return msi;
 		}
 
