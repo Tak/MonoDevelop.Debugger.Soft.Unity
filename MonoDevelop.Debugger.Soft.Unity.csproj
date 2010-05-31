@@ -57,35 +57,37 @@
       <Package>gtk-sharp-2.0</Package>
     </Reference>
     <Reference Include="Mono.Debugger.Soft, Version=0.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756">
-      <Package>monodevelop-core-addins</Package>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\monodevelop\main\build\AddIns\MonoDevelop.Debugger.Soft\Mono.Debugger.Soft.dll</HintPath>
     </Reference>
     <Reference Include="MonoDevelop.Debugger.Soft, Version=2.4.0.0, Culture=neutral, PublicKeyToken=null">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\mono-repo\monodevelop\main\build\AddIns\MonoDevelop.Debugger.Soft.dll</HintPath>
-      <Package>monodevelop-core-addins</Package>
+      <HintPath>..\monodevelop\main\build\AddIns\MonoDevelop.Debugger.Soft\MonoDevelop.Debugger.Soft.dll</HintPath>
     </Reference>
     <Reference Include="MonoDevelop.Debugger, Version=2.4.0.0, Culture=neutral, PublicKeyToken=null">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\mono-repo\monodevelop\main\build\AddIns\MonoDevelop.Debugger.dll</HintPath>
-      <Package>monodevelop-core-addins</Package>
+      <HintPath>..\monodevelop\main\build\AddIns\MonoDevelop.Debugger\MonoDevelop.Debugger.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Posix" />
     <Reference Include="Mono.Debugging, Version=0.0.0.0, Culture=neutral, PublicKeyToken=40c86c8e7b5dc1eb">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\mono-repo\monodevelop\main\build\AddIns\Mono.Debugging.dll</HintPath>
-      <Package>monodevelop</Package>
+      <HintPath>..\monodevelop\main\build\bin\Mono.Debugging.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Debugging.Soft, Version=0.0.0.0, Culture=neutral, PublicKeyToken=4f692bee1572a3ec">
-      <Package>monodevelop-core-addins</Package>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\monodevelop\main\build\AddIns\MonoDevelop.Debugger.Soft\Mono.Debugging.Soft.dll</HintPath>
     </Reference>
-    <Reference Include="MonoDevelop.Ide, Version=2.4.0.0, Culture=neutral">
-      <Package>monodevelop</Package>
+    <Reference Include="Mono.TextEditor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\monodevelop\main\build\bin\Mono.TextEditor.dll</HintPath>
     </Reference>
-    <Reference Include="MonoDevelop.Core, Version=2.4.0.0, Culture=neutral">
-      <Package>monodevelop</Package>
+    <Reference Include="MonoDevelop.Core, Version=2.4.0.0, Culture=neutral, PublicKeyToken=null">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\monodevelop\main\build\bin\MonoDevelop.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Mono.TextEditor, Version=1.0.0.0, Culture=neutral">
-      <Package>monodevelop</Package>
+    <Reference Include="MonoDevelop.Ide, Version=2.4.0.0, Culture=neutral, PublicKeyToken=null">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\monodevelop\main\build\bin\MonoDevelop.Ide.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
