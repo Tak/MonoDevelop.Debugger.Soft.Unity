@@ -48,12 +48,6 @@ namespace MonoDevelop.Debugger.Soft.Unity
 		}
 		
 		static readonly List<string> UserAssemblies = new List<string>{
-			"/Users/levi/Downloads/ShadowProject/Library/ScriptAssemblies/Assembly - CSharp - first pass.dll",
-			"/Users/levi/Downloads/ShadowProject/Library/ScriptAssemblies/Assembly - CSharp.dll",
-			"/Users/levi/Downloads/ShadowProject/Library/ScriptAssemblies/Assembly - UnityScript - first pass.dll",
-			"/Users/levi/Downloads/ShadowProject/Library/ScriptAssemblies/Assembly - UnityScript.dll",
-			"/Users/levi/Downloads/ShadowProject/Library/ScriptAssemblies/Assembly - Boo - first pass.dll",
-			"/Users/levi/Downloads/ShadowProject/Library/ScriptAssemblies/Assembly - Boo.dll",
 		};
 
 		public bool CanDebugCommand (ExecutionCommand command)

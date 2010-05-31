@@ -78,19 +78,12 @@ namespace MonoDevelop.Debugger.Soft.Unity
 				throw new InvalidOperationException ("Unity already started");
 			
 			var psi = new ProcessStartInfo (unityPath)
-			// var psi = new ProcessStartInfo ("/Users/levi/Code/unity/unity-2.7/build/MacEditor/Unity.app/Contents/MacOS/Unity")
 			{
 				Arguments = string.Empty,
 				UseShellExecute = false,
 				WorkingDirectory = Path.GetDirectoryName (unityPath)
 			};
 
-//			var sdbLog = Environment.GetEnvironmentVariable ("MONODEVELOP_SDB_LOG");
-//			if (!String.IsNullOrEmpty (sdbLog)) {
-//				options = options ?? new LaunchOptions ();
-//				options.AgentArgs = string.Format ("loglevel=1,logfile='{0}'", sdbLog);
-//			}
-			
 			// Pass through environment
 			foreach (DictionaryEntry env in Environment.GetEnvironmentVariables ()) {
 				Console.WriteLine ("{0} = \"{1}\"", env.Key, env.Value);
