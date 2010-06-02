@@ -41,6 +41,8 @@ namespace MonoDevelop.Debugger.Soft.Unity
 {
 	public class UnitySoftDebuggerEngine: IDebuggerEngine
 	{
+		UnitySoftDebuggerSession session;
+		
 		public string Id {
 			get {
 				return "Mono.Debugger.Soft.Unity";
@@ -51,7 +53,7 @@ namespace MonoDevelop.Debugger.Soft.Unity
 		};
 
 		public bool CanDebugCommand (ExecutionCommand command)
-		{			return (command is UnityExecutionCommand);
+		{			return (command is UnityExecutionCommand && null == session);
 		}
 		
 		public DebuggerStartInfo CreateDebuggerStartInfo (ExecutionCommand command)
@@ -78,7 +80,9 @@ namespace MonoDevelop.Debugger.Soft.Unity
 		
 		public DebuggerSession CreateSession ()
 		{
-			return new UnitySoftDebuggerSession ();
+			session = new UnitySoftDebuggerSession ();
+			session.TargetExited += delegate{ session = null; };
+			return session;
 		}
 		
 		public ProcessInfo[] GetAttachableProcesses ()
