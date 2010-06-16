@@ -17,7 +17,7 @@
 	<Extension path="/MonoDevelop/Debugging/DebuggerEngines">
 		<DebuggerEngine
 			id="MonoDevelop.Debugger.Soft.Unity"
-			name="Unity Soft Debugger"
+			name="Unity Debugger"
 			features="Breakpoints, Pause, Stepping, DebugFile, ConditionalBreakpoints, Tracepoints, Catchpoints"
 			type="MonoDevelop.Debugger.Soft.Unity.UnitySoftDebuggerEngine" />
 	</Extension>
