@@ -46,7 +46,11 @@ namespace MonoDevelop.Debugger.Soft.Unity
 			this.Build ();
 			
 			// Load defaults
-			unityChooser.SetFilename (Util.UnityLocation);
+			if (File.Exists (Util.UnityLocation)) {
+				unityChooser.SetFilename (Util.UnityLocation);
+			} else {
+				unityChooser.SetFilename (Environment.GetFolderPath (Environment.SpecialFolder.Personal));
+			}
 			launchCB.Active = Util.UnityLaunch;
 		}
 
