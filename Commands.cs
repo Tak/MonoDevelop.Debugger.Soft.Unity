@@ -26,7 +26,11 @@
 // 
 // 
 using System;
+using System.IO;
 
+using MonoDevelop.Ide;
+using MonoDevelop.Ide.Gui;
+using MonoDevelop.Core;
 using MonoDevelop.Components.Commands;
 
 namespace MonoDevelop.Debugger.Soft.Unity
@@ -36,17 +40,95 @@ namespace MonoDevelop.Debugger.Soft.Unity
 		SearchReference
 	}
 	
-	class CommandHandler: MonoDevelop.Components.Commands.CommandHandler
+	class SearchReferenceCommandHandler: MonoDevelop.Components.Commands.CommandHandler
 	{
+		string apiBase;
+		
+		static string onlineApiBase = "http://unity3d.com/support/documentation/ScriptReference";
+		static string classReferencePage = "20_class_hierarchy.html";
+		static string searchPage = "30_search.html";
+		
+		public SearchReferenceCommandHandler()
+		{
+			string[] paths = new string[]{};
+			
+			
+			if (PropertyService.IsMac) {
+				paths = new string[]{ "/Applications/Unity/Documentation/ScriptReference" };
+			} else if (PropertyService.IsWindows) {
+				paths = new string[]{ "C:/Program Files/Unity/Documentation/ScriptReference", "C:/Program Files (x86)/Unity/Documentation/Script Reference" };
+			}// Initialize script reference base path
+			
+			
+			foreach (string path in paths) {
+				if (Directory.Exists (path)) {
+					apiBase = path;
+					break;
+				}
+			}
+			
+			if (string.IsNullOrEmpty (apiBase)) {
+				apiBase = onlineApiBase;
+			}// Fall back to online docs if local script reference isn't found
+		}
+		
+		// Always enable API Reference Search
 		protected override void Update (CommandInfo item)
 		{
-			Console.WriteLine ("CommandHandler: Updating {0}", item);
 			item.Visible = item.Enabled = true;
 		}
 		
 		protected override void Run ()
 		{
-			Console.WriteLine ("CommandHandler: Activating SearchReference");
+			string token = GetCurrentToken ();
+			
+			// Fallback to class reference root if no token found
+			string url = string.Format ("{0}/{1}", apiBase, classReferencePage); 
+			
+			if (!string.IsNullOrEmpty (token)) {
+				url = string.Format("{0}/{1}.html", apiBase, token);
+				if (!File.Exists (url)) {
+					url = string.Format ("{0}/{1}.html", apiBase, token.Replace ('.', '-'));
+					if (!File.Exists (url)) {
+						url = string.Format ("{0}/{1}?q={2}", onlineApiBase, searchPage, token);
+					}// If changing Base.member to Base-member doesn't help, fall back to online search
+				}// If a local literal path isn't found for the token
+			}// If a token is found
+			
+			if (!url.StartsWith ("http://", StringComparison.OrdinalIgnoreCase)) {
+				url = string.Format ("file://{0}", url);
+			}// Prepend file:// for local lookups
+			
+			DesktopService.ShowUrl (url);
+		}
+		
+		// Characters that signify the beginning or end of a searchable token
+		static char[] tokenBreakers = { ' ', '\t', '(', ')', '[', ']', '{', '}', ';', ':' };
+		
+		// Get the currently highlighted token from the active document
+		static string GetCurrentToken() {
+			Document doc = IdeApp.Workbench.ActiveDocument;
+			
+			if (null != doc) {
+				int line = doc.TextEditor.CursorLine;
+				int column = Math.Max (1, doc.TextEditor.CursorColumn-1);
+				string lineText = doc.TextEditor.GetLineText (line);
+				
+				if (3 < lineText.Length) {
+					int start = lineText.LastIndexOfAny (tokenBreakers, column-1);
+					int end = lineText.IndexOfAny (tokenBreakers, column);
+					
+					if (0 > end) end = lineText.Length;
+					
+					int tokenLength = end - start - 1;
+					
+					if (0 < tokenLength && lineText.Length >= start + 1 + tokenLength) {
+						return lineText.Substring (start+1, tokenLength).Trim ();
+					}// If we found a valid token
+				}// If we have a searchable lineText
+			}// If a document is open
+			
+			return string.Empty;
 		}
 	}
 

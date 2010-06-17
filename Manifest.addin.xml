@@ -44,7 +44,7 @@
 		<Command id = "MonoDevelop.Debugger.Soft.Unity.Commands.SearchReference" 
 			_label = "Unity API Reference"
 			description = "Opens the Unity API Reference."
-			defaultHandler = "MonoDevelop.Debugger.Soft.Unity.CommandHandler"
+			defaultHandler = "MonoDevelop.Debugger.Soft.Unity.SearchReferenceCommandHandler"
 			shortcut = "Control|'" 
 			macShortcut = "Meta|'"
 		/>
