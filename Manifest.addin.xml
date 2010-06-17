@@ -34,4 +34,20 @@
 				class = "MonoDevelop.Debugger.Soft.Unity.GeneralOptionsPanelBinding"/>
 			</Section>
 	</Extension>
+	
+	<Extension path = "/MonoDevelop/Ide/MainMenu/Help">
+		<CommandItem id = "MonoDevelop.Debugger.Soft.Unity.Commands.SearchReference" 
+            insertafter= "MonoDevelop.Ide.Commands.HelpCommands.Help" />
+	</Extension>
+	
+	<Extension path = "/MonoDevelop/Ide/Commands/Help">
+		<Command id = "MonoDevelop.Debugger.Soft.Unity.Commands.SearchReference" 
+			_label = "Unity API Reference"
+			description = "Opens the Unity API Reference."
+			defaultHandler = "MonoDevelop.Debugger.Soft.Unity.CommandHandler"
+			shortcut = "Control|'" 
+			macShortcut = "Meta|'"
+		/>
+	</Extension>
 </Addin>
+
