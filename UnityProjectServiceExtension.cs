@@ -31,6 +31,7 @@ using System.IO;
 using System.Linq;
 using System.Collections.Generic;
 
+using MonoDevelop.Ide;
 using MonoDevelop.Projects;
 using MonoDevelop.Core.Execution;
 
@@ -78,7 +79,7 @@ namespace MonoDevelop.Debugger.Soft.Unity
 		/// </summary>
 		public override void Execute (MonoDevelop.Core.IProgressMonitor monitor, IBuildTarget item, ExecutionContext context, ConfigurationSelector configuration)
 		{
-			context.ExecutionHandler.Execute (new UnityExecutionCommand (item.BaseDirectory.FullPath), context.ConsoleFactory.CreateConsole (true));
+			IdeApp.ProjectOperations.CurrentRunOperation = context.ExecutionHandler.Execute (new UnityExecutionCommand (item.BaseDirectory.FullPath), context.ConsoleFactory.CreateConsole (true));
 		}
 		
 		#endregion
