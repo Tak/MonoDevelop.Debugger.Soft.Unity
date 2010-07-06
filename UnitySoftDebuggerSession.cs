@@ -57,6 +57,7 @@ namespace MonoDevelop.Debugger.Soft.Unity
 			Adaptor.BusyStateChanged += delegate(object sender, BusyStateEventArgs e) {
 				SetBusyState (e);
 			};
+			MonoDevelop.Ide.IdeApp.Exiting += (sender,args) => EndSession();
 		}
 		
 		protected override void OnRun (DebuggerStartInfo startInfo)
