@@ -42,6 +42,8 @@ namespace MonoDevelop.Debugger.Soft.Unity
 	/// </summary>
 	public class UnityProjectServiceExtension: ProjectServiceExtension
 	{
+		internal static string EditLayout = "Solution";
+		
 		/// <summary>
 		/// Detects whether any of the given projects reference UnityEngine
 		/// </summary>
@@ -79,6 +81,7 @@ namespace MonoDevelop.Debugger.Soft.Unity
 		/// </summary>
 		public override void Execute (MonoDevelop.Core.IProgressMonitor monitor, IBuildTarget item, ExecutionContext context, ConfigurationSelector configuration)
 		{
+			IdeApp.Workbench.CurrentLayout = "Debug";
 			IdeApp.ProjectOperations.CurrentRunOperation = context.ExecutionHandler.Execute (new UnityExecutionCommand (item.BaseDirectory.FullPath), context.ConsoleFactory.CreateConsole (true));
 		}
 		

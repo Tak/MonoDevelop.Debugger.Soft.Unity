@@ -111,6 +111,9 @@ namespace MonoDevelop.Debugger.Soft.Unity
 		protected override void EndSession ()
 		{
 			try {
+				Ide.DispatchService.GuiDispatch (() =>
+					Ide.IdeApp.Workbench.CurrentLayout = UnityProjectServiceExtension.EditLayout
+				);
 				EndUnityProcess ();
 				base.EndSession ();
 			} catch (Mono.Debugger.Soft.VMDisconnectedException) {
@@ -138,5 +141,14 @@ namespace MonoDevelop.Debugger.Soft.Unity
 			unityprocess.WaitForExit (5000);
 			unityprocess = null;
 		}
-	}
+	
+
+		protected override void OnConnected ()
+		{
+			base.OnConnected ();
+			Ide.DispatchService.GuiDispatch (() =>
+				Ide.IdeApp.Workbench.CurrentLayout = "Debug"
+			);
+		}
+}
 }
