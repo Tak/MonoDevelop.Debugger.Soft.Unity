@@ -85,19 +85,6 @@ namespace MonoDevelop.Debugger.Soft.Unity
 			IdeApp.ProjectOperations.CurrentRunOperation = context.ExecutionHandler.Execute (new UnityExecutionCommand (item.BaseDirectory.FullPath), context.ConsoleFactory.CreateConsole (true));
 		}
 		
-		/// <summary>
-		/// Don't force Unity projects to build successfully before launching debugger
-		/// </summary>
-		public override bool GetNeedsBuilding (IBuildTarget item, ConfigurationSelector configuration)
-		{
-			if (item is Project &&
-			    !string.IsNullOrEmpty (Util.UnityLocation) &&
-			    File.Exists (Util.UnityLocation) &&
-			    ReferencesUnity (new Project[]{ (Project)item })) {
-				return false;
-			}
-			return base.GetNeedsBuilding (item, configuration);
-		}
 		#endregion
 	}
 	
