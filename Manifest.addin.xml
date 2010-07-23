@@ -31,6 +31,7 @@
 			<Section
 				id = "UnitySoftDebuggerOptions"
 				_label = "Debugger"
+				icon = "unity-icon-24" 
 				class = "MonoDevelop.Debugger.Soft.Unity.GeneralOptionsPanelBinding"/>
 			</Section>
 	</Extension>
@@ -48,6 +49,10 @@
 			shortcut = "Control|'" 
 			macShortcut = "Meta|'"
 		/>
+	</Extension>
+	
+	<Extension path = "/MonoDevelop/Core/StockIcons">
+		<StockIcon stockid = "unity-icon-24" resource = "MonoDevelop.Debugger.Soft.Unity.icons.unity-icon-24.png" />
 	</Extension>
 </Addin>
 

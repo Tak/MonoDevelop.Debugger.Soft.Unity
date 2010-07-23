@@ -92,6 +92,7 @@
     <EmbeddedResource Include="gtk-gui\gui.stetic">
       <LogicalName>gui.stetic</LogicalName>
     </EmbeddedResource>
+    <EmbeddedResource Include="icons\unity-icon-24.png" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="UnitySoftDebuggerEngine.cs" />
