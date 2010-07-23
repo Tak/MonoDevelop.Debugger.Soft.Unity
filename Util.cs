@@ -69,7 +69,7 @@ namespace MonoDevelop.Debugger.Soft.Unity
 		/// Whether to try to build Unity projects
 		/// </summary>
 		public static bool UnityBuild {
-			get{ return PropertyService.Get (UnityBuildProperty, true); }
+			get{ return PropertyService.Get (UnityBuildProperty, false); }
 			set{ PropertyService.Set (UnityBuildProperty, value); }
 		}
 		
