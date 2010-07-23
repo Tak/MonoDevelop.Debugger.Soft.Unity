@@ -41,13 +41,20 @@ namespace MonoDevelop.Debugger.Soft.Unity
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class GeneralOptionsPanel : Gtk.Bin
 	{
+		private static readonly string internalPath = "/Contents/MacOS/Unity";
+		
 		public GeneralOptionsPanel ()
 		{
 			this.Build ();
 			
+			if (PropertyService.IsMac) {
+				unityChooser.Action = Gtk.FileChooserAction.SelectFolder;
+				unityChooser.Title = "Browse to the Unity app";
+			}
+			
 			// Load defaults
 			if (File.Exists (Util.UnityLocation)) {
-				unityChooser.SetFilename (Util.UnityLocation);
+				unityChooser.SetFilename (Util.UnityLocation.Replace(internalPath, string.Empty));
 			} else {
 				unityChooser.SetFilename (Environment.GetFolderPath (Environment.SpecialFolder.Personal));
 			}
@@ -60,6 +67,7 @@ namespace MonoDevelop.Debugger.Soft.Unity
 		public bool Store ()
 		{
 			Util.UnityLocation = unityChooser.Filename;
+			if (PropertyService.IsMac) { Util.UnityLocation += internalPath; }
 			Util.UnityLaunch = launchCB.Active;
 			PropertyService.SaveProperties ();
 			return true;
