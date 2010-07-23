@@ -47,6 +47,7 @@ namespace MonoDevelop.Debugger.Soft.Unity
 		// Keys for PropertyService
 		public static readonly string UnityLocationProperty = "MonoDevelop.Debugger.Soft.Unity.UnityLocation";
 		public static readonly string UnityLaunchProperty = "MonoDevelop.Debugger.Soft.Unity.LaunchUnity";
+		public static readonly string UnityBuildProperty = "MonoDevelop.Debugger.Soft.Unity.BuildUnity";
 		
 		/// <summary>
 		/// Configured path to Unity editor
@@ -62,6 +63,14 @@ namespace MonoDevelop.Debugger.Soft.Unity
 		public static bool UnityLaunch {
 			get{ return PropertyService.Get (UnityLaunchProperty, true); }
 			set{ PropertyService.Set (UnityLaunchProperty, value); }
+		}
+		
+		/// <summary>
+		/// Whether to try to build Unity projects
+		/// </summary>
+		public static bool UnityBuild {
+			get{ return PropertyService.Get (UnityBuildProperty, true); }
+			set{ PropertyService.Set (UnityBuildProperty, value); }
 		}
 		
 		/// <summary>

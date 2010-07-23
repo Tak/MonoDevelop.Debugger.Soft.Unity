@@ -14,6 +14,8 @@ namespace MonoDevelop.Debugger.Soft.Unity
 
 		private global::Gtk.CheckButton launchCB;
 
+		private global::Gtk.CheckButton buildCB;
+
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);
@@ -60,6 +62,18 @@ namespace MonoDevelop.Debugger.Soft.Unity
 			w4.Position = 1;
 			w4.Expand = false;
 			w4.Fill = false;
+			// Container child vbox1.Gtk.Box+BoxChild
+			this.buildCB = new global::Gtk.CheckButton ();
+			this.buildCB.CanFocus = true;
+			this.buildCB.Name = "buildCB";
+			this.buildCB.Label = global::Mono.Unix.Catalog.GetString ("_Build project in MonoDevelop");
+			this.buildCB.DrawIndicator = true;
+			this.buildCB.UseUnderline = true;
+			this.vbox1.Add (this.buildCB);
+			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.buildCB]));
+			w5.Position = 2;
+			w5.Expand = false;
+			w5.Fill = false;
 			this.Add (this.vbox1);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();

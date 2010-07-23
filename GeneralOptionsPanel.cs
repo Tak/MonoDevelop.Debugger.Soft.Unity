@@ -59,6 +59,7 @@ namespace MonoDevelop.Debugger.Soft.Unity
 				unityChooser.SetFilename (Environment.GetFolderPath (Environment.SpecialFolder.Personal));
 			}
 			launchCB.Active = Util.UnityLaunch;
+			buildCB.Active = Util.UnityBuild;
 		}
 
 		/// <summary>
@@ -69,6 +70,7 @@ namespace MonoDevelop.Debugger.Soft.Unity
 			Util.UnityLocation = unityChooser.Filename;
 			if (PropertyService.IsMac) { Util.UnityLocation += internalPath; }
 			Util.UnityLaunch = launchCB.Active;
+			Util.UnityBuild = buildCB.Active;
 			PropertyService.SaveProperties ();
 			return true;
 		}
