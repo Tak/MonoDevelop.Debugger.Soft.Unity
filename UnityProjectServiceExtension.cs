@@ -85,6 +85,15 @@ namespace MonoDevelop.Debugger.Soft.Unity
 			IdeApp.ProjectOperations.CurrentRunOperation = context.ExecutionHandler.Execute (new UnityExecutionCommand (item.BaseDirectory.FullPath), context.ConsoleFactory.CreateConsole (true));
 		}
 		
+		public override bool GetNeedsBuilding (IBuildTarget item, ConfigurationSelector configuration)
+		{
+			if (item is WorkspaceItem){ return GetNeedsBuilding ((WorkspaceItem)item, configuration); }
+			if (item is Project && ReferencesUnity (new Project[]{ (Project)item }) && !Util.UnityBuild) {
+				return false;
+			}
+			return base.GetNeedsBuilding (item, configuration);
+		}
+		
 		#endregion
 	}
 	
