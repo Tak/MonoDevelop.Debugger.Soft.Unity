@@ -4,7 +4,6 @@
 		<_Name>Boo Unity Script</_Name>
 		<Icon>md-unityscript-file</Icon>
 		<_Category>Unity</_Category>
-		<LanguageName>Boo</LanguageName>
 		<_Description>Creates a new Boo script for Unity.</_Description>
 	</TemplateConfiguration>
 	

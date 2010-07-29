@@ -4,7 +4,6 @@
 		<_Name>C# Unity Script</_Name>
 		<Icon>md-unityscript-file</Icon>
 		<_Category>Unity</_Category>
-		<LanguageName>C#</LanguageName>
 		<_Description>Creates a new C# script for Unity.</_Description>
 	</TemplateConfiguration>
 	
