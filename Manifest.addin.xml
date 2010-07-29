@@ -54,5 +54,11 @@
 	<Extension path = "/MonoDevelop/Core/StockIcons">
 		<StockIcon stockid = "unity-icon-24" resource = "MonoDevelop.Debugger.Soft.Unity.icons.unity-icon-24.png" />
 	</Extension>
+	
+	<Extension path = "/MonoDevelop/Ide/FileTemplates">
+		<FileTemplate id = "NewBehaviourScriptCS" resource = "MonoDevelop.Debugger.Soft.Unity.templates.NewBehaviourScriptCS.xft.xml"/>
+		<FileTemplate id = "NewBehaviourScriptJS" resource = "MonoDevelop.Debugger.Soft.Unity.templates.NewBehaviourScriptJS.xft.xml"/>
+		<FileTemplate id = "NewBehaviourScriptBoo" resource = "MonoDevelop.Debugger.Soft.Unity.templates.NewBehaviourScriptBoo.xft.xml"/>
+	</Extension>
 </Addin>
 
