@@ -10,7 +10,7 @@
 	
 	<TemplateFiles>
 		<File DefaultExtension=".shader" DefaultName="NewShader" AddStandardHeader="False">
-		<![CDATA[Shader "New Shader" {
+		<![CDATA[Shader "${FileNameWithoutExtension}" {
 	Properties {
 		_Color ("Main Color", Color) = (1,1,1,1)
 		_MainTex ("Base (RGB)", 2D) = "white" {}

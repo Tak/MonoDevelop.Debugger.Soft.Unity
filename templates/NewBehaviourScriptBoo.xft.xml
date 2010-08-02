@@ -11,7 +11,7 @@
 		<File DefaultExtension=".boo" DefaultName="NewBehaviourScript" AddStandardHeader="True">
 		<![CDATA[import UnityEngine
 		
-class NewBehaviourScript(MonoBehaviour):
+class ${FileNameWithoutExtension}(MonoBehaviour):
 	# Use this for initialization
 	def Start ():
 		pass
