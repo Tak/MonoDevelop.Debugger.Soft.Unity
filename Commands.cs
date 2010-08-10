@@ -110,6 +110,7 @@ namespace MonoDevelop.Debugger.Soft.Unity
 			Document doc = IdeApp.Workbench.ActiveDocument;
 			
 			if (null != doc) {
+				if (doc.TextEditorData.IsSomethingSelected) return doc.TextEditorData.SelectedText;
 				int line = doc.TextEditor.CursorLine;
 				int column = Math.Max (1, doc.TextEditor.CursorColumn-1);
 				string lineText = doc.TextEditor.GetLineText (line);
