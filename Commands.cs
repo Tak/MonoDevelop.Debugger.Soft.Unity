@@ -107,13 +107,16 @@ namespace MonoDevelop.Debugger.Soft.Unity
 		
 		// Get the currently highlighted token from the active document
 		static string GetCurrentToken() {
+			
 			Document doc = IdeApp.Workbench.ActiveDocument;
 			
-			if (null != doc) {
-				if (doc.TextEditorData.IsSomethingSelected) return doc.TextEditorData.SelectedText;
-				int line = doc.TextEditor.CursorLine;
-				int column = Math.Max (1, doc.TextEditor.CursorColumn-1);
-				string lineText = doc.TextEditor.GetLineText (line);
+			if ( null != doc )
+			{
+				// Selected Text?
+				if (doc.Editor.IsSomethingSelected) return doc.Editor.SelectedText.Trim();
+				
+				int column = Math.Max (1,doc.Editor.Caret.Column-1);
+				string lineText = doc.Editor.GetLineText (doc.Editor.Caret.Line);
 				
 				if (3 < lineText.Length) {
 					int start = lineText.LastIndexOfAny (tokenBreakers, column-1);
