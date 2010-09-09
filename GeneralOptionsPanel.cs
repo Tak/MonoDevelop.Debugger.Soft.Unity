@@ -54,7 +54,11 @@ namespace MonoDevelop.Debugger.Soft.Unity
 			
 			// Load defaults
 			if (File.Exists (Util.UnityLocation)) {
-				unityChooser.SetFilename (Util.UnityLocation.Replace(internalPath, string.Empty));
+				if (PropertyService.IsMac) {
+					unityChooser.SetCurrentFolder (Util.UnityLocation.Replace(internalPath, string.Empty));
+				} else {
+					unityChooser.SetFilename (Util.UnityLocation);
+				}
 			} else {
 				unityChooser.SetFilename (Environment.GetFolderPath (Environment.SpecialFolder.Personal));
 			}
