@@ -59,21 +59,22 @@ namespace MonoDevelop.Debugger.Soft.Unity
 		
 		#region ProjectServiceExtension overrides
 		
+		private bool CanExecuteProject (Project project, ExecutionContext context) {
+			return null != project && 
+			       !string.IsNullOrEmpty (Util.UnityLocation) &&
+			       File.Exists (Util.UnityLocation) &&
+			       ReferencesUnity (new Project[]{ project });
+		}
+		
 		/// <summary>
 		/// Flags Unity projects for debugging with this addin
 		/// </summary>
-		public override bool CanExecute (IBuildTarget item, ExecutionContext context, ConfigurationSelector configuration)
+		protected override bool CanExecute (SolutionEntityItem item, ExecutionContext context, ConfigurationSelector configuration)
 		{
-			if (item is WorkspaceItem) {
-				return CanExecute ((WorkspaceItem)item, context, configuration);
-			}
-			if (item is Project &&
-			    !string.IsNullOrEmpty (Util.UnityLocation) &&
-			    File.Exists (Util.UnityLocation) &&
-			    ReferencesUnity (new Project[]{ (Project)item })) {
+			if (CanExecuteProject (item as Project, context)) {
 				return context.ExecutionHandler.CanExecute (new UnityExecutionCommand (item.BaseDirectory.FullPath));
 			}
-			return false;
+			return base.CanExecute (item, context, configuration);
 		}
 		
 		/// <summary>
@@ -81,8 +82,12 @@ namespace MonoDevelop.Debugger.Soft.Unity
 		/// </summary>
 		public override void Execute (MonoDevelop.Core.IProgressMonitor monitor, IBuildTarget item, ExecutionContext context, ConfigurationSelector configuration)
 		{
-			IdeApp.Workbench.CurrentLayout = "Debug";
-			IdeApp.ProjectOperations.CurrentRunOperation = context.ExecutionHandler.Execute (new UnityExecutionCommand (item.BaseDirectory.FullPath), context.ConsoleFactory.CreateConsole (true));
+			if (CanExecuteProject (item as Project, context)) {
+				IdeApp.Workbench.CurrentLayout = "Debug";
+				IdeApp.ProjectOperations.CurrentRunOperation = context.ExecutionHandler.Execute (new UnityExecutionCommand (item.BaseDirectory.FullPath), context.ConsoleFactory.CreateConsole (true));
+			} else {
+				base.Execute (monitor, item, context, configuration);
+			}
 		}
 		
 		public override bool GetNeedsBuilding (IBuildTarget item, ConfigurationSelector configuration)
