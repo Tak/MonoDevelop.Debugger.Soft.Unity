@@ -79,7 +79,7 @@ namespace MonoDevelop.Debugger.Soft.Unity
 				throw new InvalidOperationException ("Unity already started");
 				
 			if (PropertyService.IsMac && Directory.Exists (unityPath)) {
-				dsi.Arguments = string.Format ("-W {0} --args {1}", unityPath, dsi.Arguments);
+				dsi.Arguments = string.Format ("-W '{0}' --args {1}", unityPath, dsi.Arguments);
 				unityPath = ("open");
 			}
 			
