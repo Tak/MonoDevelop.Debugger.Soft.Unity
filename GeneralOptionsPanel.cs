@@ -53,15 +53,18 @@ namespace MonoDevelop.Debugger.Soft.Unity
 			}
 			
 			// Load defaults
-			if (File.Exists (Util.UnityLocation)) {
-				if (PropertyService.IsMac) {
+			unityChooser.SetFilename (Environment.GetFolderPath (Environment.SpecialFolder.Personal));
+			
+			if (PropertyService.IsMac) {
+				if (File.Exists (Util.UnityLocation)) {
 					unityChooser.SetCurrentFolder (Util.UnityLocation.Replace(internalPath, string.Empty));
-				} else {
-					unityChooser.SetFilename (Util.UnityLocation);
+				} else if (Directory.Exists (Util.UnityLocation)) {
+					unityChooser.SetCurrentFolder (Util.UnityLocation);
 				}
-			} else {
-				unityChooser.SetFilename (Environment.GetFolderPath (Environment.SpecialFolder.Personal));
+			} else if (File.Exists (Util.UnityLocation)) {
+				unityChooser.SetFilename (Util.UnityLocation);
 			}
+			
 			launchCB.Active = Util.UnityLaunch;
 			buildCB.Active = Util.UnityBuild;
 		}
@@ -72,7 +75,12 @@ namespace MonoDevelop.Debugger.Soft.Unity
 		public bool Store ()
 		{
 			Util.UnityLocation = unityChooser.Filename;
-			if (PropertyService.IsMac) { Util.UnityLocation += internalPath; }
+			if (PropertyService.IsMac) {
+				string fullPath = Util.UnityLocation + internalPath;
+				if (File.Exists (fullPath)) {
+					Util.UnityLocation = fullPath;
+				}
+			}
 			Util.UnityLaunch = launchCB.Active;
 			Util.UnityBuild = buildCB.Active;
 			PropertyService.SaveProperties ();
