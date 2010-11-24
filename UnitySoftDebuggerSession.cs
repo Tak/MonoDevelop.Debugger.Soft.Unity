@@ -163,7 +163,7 @@ namespace MonoDevelop.Debugger.Soft.Unity
 			if (UnitySoftDebuggerEngine.UnityPlayers.ContainsKey ((uint)processId)) {
 				PlayerConnection.PlayerInfo player = UnitySoftDebuggerEngine.UnityPlayers[(uint)processId];
 				try {
-					HandleConnection (VirtualMachineManager.Connect (new IPEndPoint (player.m_IPEndPoint.Address, (int)clientPort)));
+					StartConnecting (new RemoteDebuggerStartInfo (player.m_Id, player.m_IPEndPoint.Address, (int)clientPort), 3, 1000);
 				} catch (Exception ex) {
 					throw new Exception (string.Format ("Unable to attach to {0}:{1}", player.m_IPEndPoint.Address, clientPort), ex);
 				}
