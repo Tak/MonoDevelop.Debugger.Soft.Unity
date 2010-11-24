@@ -18,7 +18,7 @@
 		<DebuggerEngine
 			id="MonoDevelop.Debugger.Soft.Unity"
 			name="Unity Debugger"
-			features="Breakpoints, Pause, Stepping, DebugFile, ConditionalBreakpoints, Tracepoints, Catchpoints"
+			features="Breakpoints, Pause, Stepping, DebugFile, ConditionalBreakpoints, Tracepoints, Catchpoints, Attaching"
 			type="MonoDevelop.Debugger.Soft.Unity.UnitySoftDebuggerEngine" />
 	</Extension>
 	
