@@ -30,6 +30,7 @@
 using System;
 using Mono.Debugger;
 using Mono.Debugging;
+using Mono.Debugger.Soft;
 using Mono.Debugging.Client;
 using System.Threading;
 using System.Diagnostics;
@@ -49,6 +50,7 @@ namespace MonoDevelop.Debugger.Soft.Unity
 	{
 		Process unityprocess;
 		string unityPath;
+		public const uint clientPort = 57432;
 		
 		public UnitySoftDebuggerSession ()
 		{
@@ -101,7 +103,7 @@ namespace MonoDevelop.Debugger.Soft.Unity
 			}
 			
 			// Connect back to soft debugger client
-			psi.EnvironmentVariables.Add ("MONO_ARGUMENTS","--debugger-agent=transport=dt_socket,address=127.0.0.1:57432,embedding=1");
+			psi.EnvironmentVariables.Add ("MONO_ARGUMENTS",string.Format ("--debugger-agent=transport=dt_socket,address=127.0.0.1:{0},embedding=1", clientPort));
 			psi.EnvironmentVariables.Add ("MONO_LOG_LEVEL","debug");
 			
 			unityprocess = Process.Start (psi);
@@ -155,5 +157,19 @@ namespace MonoDevelop.Debugger.Soft.Unity
 				Ide.IdeApp.Workbench.CurrentLayout = "Debug"
 			);
 		}
-}
+
+		protected override void OnAttachToProcess (long processId)
+		{
+			if (UnitySoftDebuggerEngine.UnityPlayers.ContainsKey ((uint)processId)) {
+				PlayerConnection.PlayerInfo player = UnitySoftDebuggerEngine.UnityPlayers[(uint)processId];
+				try {
+					HandleConnection (VirtualMachineManager.Connect (new IPEndPoint (player.m_IPEndPoint.Address, (int)clientPort)));
+				} catch (Exception ex) {
+					throw new Exception (string.Format ("Unable to attach to {0}:{1}", player.m_IPEndPoint.Address, clientPort), ex);
+				}
+				return;
+			}
+			base.OnAttachToProcess (processId);
+		}
+	}
 }
