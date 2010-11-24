@@ -27,21 +27,48 @@
 // THE SOFTWARE.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
+using System.Net;
+using System.Threading;
+using System.Reflection;
+using System.Diagnostics;
+using System.Collections.Generic;
+
 using MonoDevelop.Debugger;
 using MonoDevelop.Core;
 using MonoDevelop.Core.Execution;
 using Mono.Debugging.Client;
 using MonoDevelop.Debugger.Soft;
-using System.Net;
-using System.Reflection;
 
 namespace MonoDevelop.Debugger.Soft.Unity
 {
 	public class UnitySoftDebuggerEngine: IDebuggerEngine
 	{
 		UnitySoftDebuggerSession session;
+		static PlayerConnection unityPlayerConnection;
+		
+		internal static Dictionary<uint, PlayerConnection.PlayerInfo> UnityPlayers {
+			get;
+			private set;
+		}
+		
+		static UnitySoftDebuggerEngine ()
+		{
+			UnityPlayers = new Dictionary<uint, PlayerConnection.PlayerInfo> ();
+			
+			try {
+			// HACK: Poll Unity players
+			unityPlayerConnection = new PlayerConnection ();
+			ThreadPool.QueueUserWorkItem (delegate {
+				while (true) {
+					lock (unityPlayerConnection) {
+						unityPlayerConnection.Poll ();
+					}
+					Thread.Sleep (1000);
+				}
+			});
+			} catch { }
+		}
 		
 		public string Id {
 			get {
@@ -88,7 +115,24 @@ namespace MonoDevelop.Debugger.Soft.Unity
 		
 		public ProcessInfo[] GetAttachableProcesses ()
 		{
-			return new ProcessInfo[0];
+			int index = 1;
+			List<ProcessInfo> processes = new List<ProcessInfo> ();
+			lock (unityPlayerConnection) {
+				foreach (string player in unityPlayerConnection.AvailablePlayers) {
+					PlayerConnection.PlayerInfo info = PlayerConnection.PlayerInfo.Parse (player);
+					UnityPlayers[info.m_Guid] = info;
+					processes.Add (new ProcessInfo (info.m_Guid, info.m_Id));
+					++index;
+				}
+			}
+			foreach (Process p in Process.GetProcesses ()) {
+				if (p.ProcessName.StartsWith ("unity", StringComparison.OrdinalIgnoreCase) ||
+					p.ProcessName.Contains ("Unity.app")) {
+					processes.Add (new ProcessInfo (p.Id, string.Format ("{0} ({1})", "Unity Editor", p.ProcessName)));
+				}
+			}
+			// processes.Add (new ProcessInfo (123, "Unity Player"));
+			return processes.ToArray ();
 		}
 		
 		public string Name {
