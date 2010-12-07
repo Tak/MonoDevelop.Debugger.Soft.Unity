@@ -112,6 +112,7 @@
     <Compile Include="gtk-gui\MonoDevelop.Debugger.Soft.Unity.GeneralOptionsPanel.cs" />
     <Compile Include="Util.cs" />
     <Compile Include="Commands.cs" />
+    <Compile Include="PlayerConnection.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
