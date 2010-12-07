@@ -107,6 +107,7 @@ namespace MonoDevelop.Debugger.Soft.Unity
 			{
 				m_MulticastSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
 				m_MulticastSocket.ExclusiveAddressUse = false;
+				m_MulticastSocket.SetSocketOption (SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
 				IPEndPoint ipep = new IPEndPoint(IPAddress.Any, PLAYER_MULTICAST_PORT);
 				m_MulticastSocket.Bind(ipep);
 				
