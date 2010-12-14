@@ -42,7 +42,7 @@ namespace MonoDevelop.Debugger.Soft.Unity
 	/// </summary>
 	public class PlayerConnection
 	{
-		public const int PLAYER_MULTICAST_PORT = 54998;
+		public const int PLAYER_MULTICAST_PORT = 54997;
 		public const string PLAYER_MULTICAST_GROUP = "225.0.0.222";
 		
 		private Socket m_MulticastSocket = null;
@@ -60,12 +60,13 @@ namespace MonoDevelop.Debugger.Soft.Unity
 			public UInt32 m_Flags;
 			public UInt32 m_Guid;
 			public UInt32 m_EditorGuid;
+			public Int32 m_Version;
 			public string m_Id;
 			
 			public override string ToString ()
 			{
-				return string.Format ("PlayerInfo {0} {1} {2} {3} {4} {5}", m_IPEndPoint.Address, m_IPEndPoint.Port,
-									  m_Flags, m_Guid, m_EditorGuid, m_Id);
+				return string.Format ("PlayerInfo {0} {1} {2} {3} {4} {5} {6}", m_IPEndPoint.Address, m_IPEndPoint.Port,
+									  m_Flags, m_Guid, m_EditorGuid, m_Version, m_Id);
 			}
 			
 			public static PlayerInfo Parse(string playerString)
@@ -73,9 +74,9 @@ namespace MonoDevelop.Debugger.Soft.Unity
 				PlayerInfo res = new PlayerInfo();
 				
 				try {
-					// "[IP] %s [Port] %u [Flags] %u [Guid] %u [EditorId] %u [id] %s"
-					Regex r = new Regex("\\[IP\\] (?<g1>.*) \\[Port\\] (?<g2>.*) \\[Flags\\] (?<g3>.*)" +
-										" \\[Guid\\] (?<g4>.*) \\[EditorId\\] (?<g5>.*) \\[id\\] (?<g6>.*)");
+					// "[IP] %s [Port] %u [Flags] %u [Guid] %u [EditorId] %u [Version] %d [Id] %s"
+					Regex r = new Regex("\\[IP\\] (?<ip>.*) \\[Port\\] (?<port>.*) \\[Flags\\] (?<flags>.*)" +
+										" \\[Guid\\] (?<guid>.*) \\[EditorId\\] (?<editorid>.*) \\[Version\\] (?<version>.*) \\[Id\\] (?<id>.*)");
 					
 					MatchCollection matches = r.Matches(playerString);
 					
@@ -84,13 +85,14 @@ namespace MonoDevelop.Debugger.Soft.Unity
 						throw new Exception(string.Format("Player string not recognised {0}", playerString));
 					}
 					
-					string ip = matches[0].Groups["g1"].Value;
+					string ip = matches[0].Groups["ip"].Value;
 					
-					res.m_IPEndPoint = new IPEndPoint(IPAddress.Parse(ip), UInt16.Parse (matches[0].Groups["g2"].Value));
-					res.m_Flags = UInt32.Parse(matches[0].Groups["g3"].Value);
-					res.m_Guid = UInt32.Parse(matches[0].Groups["g4"].Value);
-					res.m_EditorGuid = UInt32.Parse(matches[0].Groups["g5"].Value);
-					res.m_Id = matches[0].Groups["g6"].Value;
+					res.m_IPEndPoint = new IPEndPoint(IPAddress.Parse(ip), UInt16.Parse (matches[0].Groups["port"].Value));
+					res.m_Flags = UInt32.Parse(matches[0].Groups["flags"].Value);
+					res.m_Guid = UInt32.Parse(matches[0].Groups["guid"].Value);
+					res.m_EditorGuid = UInt32.Parse(matches[0].Groups["guid"].Value);
+					res.m_Version = Int32.Parse (matches[0].Groups["version"].Value);
+					res.m_Id = matches[0].Groups["id"].Value;
 					
 					System.Console.WriteLine(res.ToString());
 				} catch (Exception e) {
