@@ -115,6 +115,7 @@ namespace MonoDevelop.Debugger.Soft.Unity
 		
 		public ProcessInfo[] GetAttachableProcesses ()
 		{
+			return new ProcessInfo[0];
 			int index = 1;
 			List<ProcessInfo> processes = new List<ProcessInfo> ();
 			lock (unityPlayerConnection) {
