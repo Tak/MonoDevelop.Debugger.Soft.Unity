@@ -62,11 +62,12 @@ namespace MonoDevelop.Debugger.Soft.Unity
 			public UInt32 m_EditorGuid;
 			public Int32 m_Version;
 			public string m_Id;
+			public bool m_AllowDebugging;
 			
 			public override string ToString ()
 			{
-				return string.Format ("PlayerInfo {0} {1} {2} {3} {4} {5} {6}", m_IPEndPoint.Address, m_IPEndPoint.Port,
-									  m_Flags, m_Guid, m_EditorGuid, m_Version, m_Id);
+				return string.Format ("PlayerInfo {0} {1} {2} {3} {4} {5} {6} {7}", m_IPEndPoint.Address, m_IPEndPoint.Port,
+									  m_Flags, m_Guid, m_EditorGuid, m_Version, m_Id, m_AllowDebugging? 1: 0);
 			}
 			
 			public static PlayerInfo Parse(string playerString)
@@ -76,7 +77,7 @@ namespace MonoDevelop.Debugger.Soft.Unity
 				try {
 					// "[IP] %s [Port] %u [Flags] %u [Guid] %u [EditorId] %u [Version] %d [Id] %s"
 					Regex r = new Regex("\\[IP\\] (?<ip>.*) \\[Port\\] (?<port>.*) \\[Flags\\] (?<flags>.*)" +
-										" \\[Guid\\] (?<guid>.*) \\[EditorId\\] (?<editorid>.*) \\[Version\\] (?<version>.*) \\[Id\\] (?<id>.*)");
+										" \\[Guid\\] (?<guid>.*) \\[EditorId\\] (?<editorid>.*) \\[Version\\] (?<version>.*) \\[Id\\] (?<id>.*) \\[Debug\\] (?<debug>.*)");
 					
 					MatchCollection matches = r.Matches(playerString);
 					
@@ -93,6 +94,7 @@ namespace MonoDevelop.Debugger.Soft.Unity
 					res.m_EditorGuid = UInt32.Parse(matches[0].Groups["guid"].Value);
 					res.m_Version = Int32.Parse (matches[0].Groups["version"].Value);
 					res.m_Id = matches[0].Groups["id"].Value;
+					res.m_AllowDebugging= (0 != int.Parse (matches[0].Groups["debug"].Value));
 					
 					System.Console.WriteLine(res.ToString());
 				} catch (Exception e) {
