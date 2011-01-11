@@ -118,6 +118,8 @@ namespace MonoDevelop.Debugger.Soft.Unity
 			return new ProcessInfo[0];
 			int index = 1;
 			List<ProcessInfo> processes = new List<ProcessInfo> ();
+			bool foundEditor = false;
+			
 			lock (unityPlayerConnection) {
 				foreach (string player in unityPlayerConnection.AvailablePlayers) {
 					PlayerConnection.PlayerInfo info = PlayerConnection.PlayerInfo.Parse (player);
@@ -130,9 +132,14 @@ namespace MonoDevelop.Debugger.Soft.Unity
 				if (p.ProcessName.StartsWith ("unity", StringComparison.OrdinalIgnoreCase) ||
 					p.ProcessName.Contains ("Unity.app")) {
 					processes.Add (new ProcessInfo (p.Id, string.Format ("{0} ({1})", "Unity Editor", p.ProcessName)));
+					foundEditor = true;
 				}
 			}
-			// processes.Add (new ProcessInfo (123, "Unity Player"));
+			
+			if (!foundEditor && PropertyService.IsMac) {
+				processes.Add (new ProcessInfo (56432, "Unity Editor (placeholder)"));
+			}
+			
 			return processes.ToArray ();
 		}
 		
