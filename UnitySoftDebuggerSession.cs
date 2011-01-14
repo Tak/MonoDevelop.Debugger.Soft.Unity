@@ -139,14 +139,13 @@ namespace MonoDevelop.Debugger.Soft.Unity
 		
 		void EndUnityProcess ()
 		{
-			if (unityprocess == null || unityprocess.HasExited)
-			{
-				unityprocess = null;
-				return;
+			if (null == unityprocess) {
+				Detach ();
+			} else if (!unityprocess.HasExited) {
+				unityprocess.Kill ();
+				unityprocess.WaitForExit (5000);
 			}
-
-			unityprocess.Kill ();
-			unityprocess.WaitForExit (5000);
+			
 			unityprocess = null;
 		}
 	
