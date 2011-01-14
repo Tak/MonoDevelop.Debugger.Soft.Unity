@@ -83,8 +83,10 @@ namespace MonoDevelop.Debugger.Soft.Unity
 		public override void Execute (MonoDevelop.Core.IProgressMonitor monitor, IBuildTarget item, ExecutionContext context, ConfigurationSelector configuration)
 		{
 			if (CanExecuteProject (item as Project, context)) {
-				IdeApp.Workbench.CurrentLayout = "Debug";
-				IdeApp.ProjectOperations.CurrentRunOperation = context.ExecutionHandler.Execute (new UnityExecutionCommand (item.BaseDirectory.FullPath), context.ConsoleFactory.CreateConsole (true));
+				DispatchService.GuiDispatch (delegate {
+					IdeApp.Workbench.CurrentLayout = "Debug";
+					IdeApp.ProjectOperations.CurrentRunOperation = context.ExecutionHandler.Execute (new UnityExecutionCommand (item.BaseDirectory.FullPath), context.ConsoleFactory.CreateConsole (true));
+				});
 			} else {
 				base.Execute (monitor, item, context, configuration);
 			}
