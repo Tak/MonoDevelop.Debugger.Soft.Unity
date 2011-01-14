@@ -167,5 +167,13 @@ namespace MonoDevelop.Debugger.Soft.Unity
 			}
 			base.OnAttachToProcess (processId);
 		}
+
+		protected override void OnDetach()
+		{
+			try {
+				base.OnDetach();
+			} catch (ObjectDisposedException) {
+			}
+		}
 	}
 }
